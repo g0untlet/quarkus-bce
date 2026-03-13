@@ -68,11 +68,11 @@ quarkus-bce/
 
 ```mermaid
 graph LR
-    A[Client] -->|POST /users| B[Create User]
-    A -->|GET /users| C[List All Users]
-    A -->|GET /users/{id}| D[Get User by ID]
-    A -->|PUT /users/{id}| E[Update User]
-    A -->|DELETE /users/{id}| F[Delete User]
+    A[Client] -->|POST /users| B[Create]
+    A -->|GET /users| C[List All]
+    A -->|GET /users/1| D[Get by ID]
+    A -->|PUT /users/1| E[Update]
+    A -->|DELETE /users/1| F[Delete]
 ```
 
 | Method | Endpoint | Description | Request Body |
