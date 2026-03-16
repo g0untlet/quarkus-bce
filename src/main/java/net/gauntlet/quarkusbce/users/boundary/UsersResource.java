@@ -33,6 +33,8 @@ import java.util.List;
 @Metered(absolute = true)
 public class UsersResource {
 
+    private static final System.Logger LOG = System.getLogger(UsersResource.class.getName());
+
     @Inject
     UsersControl usersControl;
 
@@ -44,6 +46,7 @@ public class UsersResource {
         if (request.email == null || request.email.isBlank()) {
             throw new BadRequestException("email is required");
         }
+        LOG.log(System.Logger.Level.INFO, "Creating user: {0}", request.name);
         User user = usersControl.create(request.name, request.email);
         return Response.status(Response.Status.CREATED)
                 .entity(user)
@@ -65,6 +68,7 @@ public class UsersResource {
     @PUT
     @Path("/{id}")
     public User update(@PathParam("id") Long id, UserRequest request) {
+        LOG.log(System.Logger.Level.INFO, "Updating user with id: {0}", id);
         return usersControl.update(id, request.name, request.email)
                 .orElseThrow(() -> new NotFoundException("User not found"));
     }
@@ -72,6 +76,7 @@ public class UsersResource {
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
+        LOG.log(System.Logger.Level.INFO, "Deleting user with id: {0}", id);
         if (!usersControl.delete(id)) {
             throw new NotFoundException("User not found");
         }

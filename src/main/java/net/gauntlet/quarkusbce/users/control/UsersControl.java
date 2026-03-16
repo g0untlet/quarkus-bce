@@ -17,9 +17,12 @@ import java.util.Optional;
 @Transactional
 public class UsersControl implements PanacheRepositoryBase<User, Long> {
 
+    private static final System.Logger LOG = System.getLogger(UsersControl.class.getName());
+
     public User create(String name, String email) {
         User user = new User(name, email);
         persist(user);
+        LOG.log(System.Logger.Level.INFO, "User created with id: {0}", user.id);
         return user;
     }
 
@@ -43,6 +46,10 @@ public class UsersControl implements PanacheRepositoryBase<User, Long> {
     }
 
     public boolean delete(Long id) {
-        return deleteById(id);
+        boolean deleted = deleteById(id);
+        if (deleted) {
+            LOG.log(System.Logger.Level.INFO, "User deleted with id: {0}", id);
+        }
+        return deleted;
     }
 }
